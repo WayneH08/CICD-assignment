@@ -48,26 +48,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: List repository files
-        run: ls -al
-
       # Step 7: Build Docker Image
       - name: Build Docker Image
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          docker build -t $DOCKER_USERNAME/backend_flask:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/backend_flask:latest .
 
       # Step 8: Log in to Docker Hub
       - name: Log in to Docker Hub
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
-        run: echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # Step 9: Push Docker Image to Docker Hub
+      # Step 9: Push Docker Image
       - name: Push Docker Image to Docker Hub
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         run: |
-          docker push $DOCKER_USERNAME/backend_flask:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/backend_flask:latest
+
