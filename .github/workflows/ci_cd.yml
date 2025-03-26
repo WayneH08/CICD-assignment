@@ -60,6 +60,6 @@ jobs:
       # Step 9: Push Docker Image
       - name: Push Docker Image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/backend_flask:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/backend_flask:latest .
 
     
